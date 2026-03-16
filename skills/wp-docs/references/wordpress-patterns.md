@@ -226,7 +226,7 @@ with the `your_plugin_manage_items_capability` filter:
 ```php
 add_filter( 'your_plugin_manage_items_capability', function ( string $capability ): string {
 	return 'edit_others_posts';
-}, 10, 1 );
+} );
 ```
 
 > **Note:** Changing the required capability affects all item management

@@ -77,23 +77,7 @@ After writing or fixing documentation:
 - Verify all code examples match actual source code.
 - Verify all internal links resolve to existing files.
 
-## Failure modes / debugging
-
-- **No docs/ directory:** handle gracefully; suggest creating one with appropriate structure.
-- **Mixed file types in target:** detect file extensions and apply the correct standards (markdown vs PHP) per file.
-- **Missing @since tags:** common issue; when the version is unknown, use `@since n.e.x.t` as a placeholder.
-- **Heading case disagreements:** follow sentence case strictly; only proper nouns and acronyms are capitalized.
-- **Code examples out of date:** always verify against current source; flag stale examples as FIX severity.
-
-## Escalation
-
-- When WordPress documentation standards conflict with project-specific conventions (e.g., `AGENTS.md`, `CLAUDE.md` overrides), project conventions win. Note the deviation.
-- When a project uses custom documentation tooling (Docusaurus, MkDocs), adapt the standards to the tooling's constraints but preserve WordPress voice and formatting rules.
-- When unsure whether a PHPDoc issue is a documentation concern (wp-docs) or a type annotation concern (wp-phpstan), apply this rule: wp-docs covers summaries, descriptions, @since, and prose quality; wp-phpstan covers type correctness for static analysis.
-
-## Checklist
-
-Before completing any documentation task:
+Quick checklist:
 
 - [ ] Sentence case headings throughout
 - [ ] No skipped heading levels
@@ -109,3 +93,17 @@ Before completing any documentation task:
 - [ ] @return tags are never bare (always include description)
 - [ ] @since present on all public/protected members
 - [ ] Proper nouns capitalized, technical terms consistent
+
+## Failure modes / debugging
+
+- **No docs/ directory:** handle gracefully; suggest creating one with appropriate structure.
+- **Mixed file types in target:** detect file extensions and apply the correct standards (markdown vs PHP) per file.
+- **Missing @since tags:** common issue; when the version is unknown, use `@since n.e.x.t` as a placeholder.
+- **Heading case disagreements:** follow sentence case strictly; only proper nouns and acronyms are capitalized.
+- **Code examples out of date:** always verify against current source; flag stale examples as FIX severity.
+
+## Escalation
+
+- When WordPress documentation standards conflict with project-specific conventions (e.g., `AGENTS.md`, `CLAUDE.md` overrides), project conventions win. Note the deviation.
+- When a project uses custom documentation tooling (Docusaurus, MkDocs), adapt the standards to the tooling's constraints but preserve WordPress voice and formatting rules.
+- When unsure whether a PHPDoc issue is a documentation concern (wp-docs) or a type annotation concern (wp-phpstan), apply this rule: wp-docs covers summaries, descriptions, @since, and prose quality; wp-phpstan covers type correctness for static analysis.

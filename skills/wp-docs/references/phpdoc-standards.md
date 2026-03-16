@@ -176,8 +176,8 @@ function register_custom_sidebar( array $args ): string {
 |------|----------|
 | Format | `@return type Description.` |
 | Never bare | Always include a description — never just `@return string` |
-| Multiple types | Separate with pipe: `@return string\|false` |
-| Void | `@return void` is reserved for bundled themes and core compatibility shims; omit for standard code |
+| Multiple types | Separate with pipe: `@return string|false` |
+| Void | Omit `@return` entirely when a function returns nothing — do not use `@return void` |
 | Description | Ends with a period |
 
 ```php
@@ -202,7 +202,7 @@ function find_user_by_email( string $email ) {
 |------|----------|
 | Required | Document every exception a public method can throw |
 | Format | `@throws ExceptionClass Description of when this is thrown.` |
-| Placement | After `@return`, before `@since` is acceptable; consistency within a project matters most |
+| Placement | After `@return`; consistency within a project matters most |
 
 ```php
 /**
@@ -382,11 +382,9 @@ File-level PHPDoc blocks are required when a file does not contain a class, inte
  * Registers autoloading, defines constants, and hooks the plugin
  * into the WordPress lifecycle.
  *
- * @since   1.0.0
+ * @since 1.0.0
  * @package MyPlugin
  */
-
-declare( strict_types=1 );
 
 // ...
 ```
@@ -400,7 +398,7 @@ For files that contain a single class, the class-level docblock serves as the fi
 | Rule | Standard |
 |------|----------|
 | Line width | Wrap text at 80 characters, never exceed 120 (including indentation) |
-| Tag order | `@since`, `@access`, `@global`, `@param`, `@return`, `@throws` |
+| Tag order | `@since`, `@access`, `@global`, `@param`, `@return` (then `@throws` if needed) |
 | Blank lines | One blank line between description and tags; one blank line between tag groups |
 | Alignment | Align `@param` types, names, and descriptions across a block |
 | Inline tags | `{@see ClassName}` or `{@see function_name()}` for cross-references within descriptions |
