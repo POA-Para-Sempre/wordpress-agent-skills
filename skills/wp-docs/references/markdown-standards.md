@@ -69,7 +69,7 @@ Capitalize only the first word and proper nouns. Everything else is lowercase.
 | Category | Rule | Example |
 |----------|------|---------|
 | Acronyms | Stay uppercase | HTTP, DTO, API, URI, CLI, AJAX, CSRF |
-| Technical names | Stay as-is (preserve original casing) | `McpComponentInterface`, `php-mcp-schema`, `wp-env` |
+| Technical names | Stay as-is (preserve original casing) | `WP_Query`, `register_post_type()`, `wp-env` |
 | Plugin/theme names | Use the official capitalization | WooCommerce, Jetpack, Yoast SEO |
 | WordPress features | Lowercase unless a proper noun | block editor, customizer, widgets |
 

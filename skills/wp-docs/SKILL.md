@@ -98,7 +98,7 @@ Quick checklist:
 
 - **No docs/ directory:** handle gracefully; suggest creating one with appropriate structure.
 - **Mixed file types in target:** detect file extensions and apply the correct standards (markdown vs PHP) per file.
-- **Missing @since tags:** common issue; when the version is unknown, use `@since n.e.x.t` as a placeholder.
+- **Missing @since tags:** common issue; use `@since n.e.x.t` for unreleased plugin versions, or `@since Unknown` when the version truly cannot be determined (WordPress core convention).
 - **Heading case disagreements:** follow sentence case strictly; only proper nouns and acronyms are capitalized.
 - **Code examples out of date:** always verify against current source; flag stale examples as FIX severity.
 

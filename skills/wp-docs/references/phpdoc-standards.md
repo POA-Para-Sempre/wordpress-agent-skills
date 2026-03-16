@@ -65,7 +65,7 @@ function register_custom_post_type( string $post_type, array $args = array() ) {
 |------|----------|
 | Required | On all public and protected members (functions, methods, classes, properties, constants, hooks) |
 | Format | Three-digit version: `@since 1.0.0` |
-| Unreleased | Use `@since n.e.x.t` for unreleased versions |
+| Unreleased | Use `@since n.e.x.t` for unreleased versions in plugin projects; WordPress core uses `@since Unknown` when the version cannot be determined |
 | Multiple entries | Add a new `@since` when behavior changes significantly (new parameter, changed default, deprecated) |
 | MU exception | `@since MU (3.0.0)` for features originating in WordPress MU |
 
@@ -140,7 +140,7 @@ function get_matching_posts(
 
 ### Array shape parameters
 
-Use `@param array{}` syntax to document the expected keys of associative arrays. Each key uses `@type` in the originating function. When consuming the same array in a called function, use `@see` to reference the original documentation rather than duplicating it.
+Use `@param array $args { ... @type ... }` syntax to document the expected keys of associative arrays. Each key uses `@type` in the originating function. Note: this is the WordPress convention — do not confuse with the PHPStan `@param array{key: type}` syntax used for static analysis. When consuming the same array in a called function, use `@see` to reference the original documentation rather than duplicating it.
 
 ```php
 /**
@@ -365,7 +365,7 @@ do_action( 'myplugin_webhook_delivered', $webhook_id, $endpoint, $payload, $resp
 
 ## File-level documentation
 
-File-level PHPDoc blocks are required when a file does not contain a class, interface, or trait (for example, a file with procedural functions or a main plugin file). Place the block at the top of the file after the opening `<?php` tag and `declare` statement.
+File-level PHPDoc blocks should be included whenever possible. They are especially important for files with procedural functions, main plugin files, and config files. For files containing a single class, the class-level docblock can serve as file documentation, but a separate file-level block is still recommended. Place the block at the top of the file immediately after the opening `<?php` tag.
 
 | Tag | Required | Notes |
 |-----|----------|-------|

@@ -12,7 +12,7 @@
     "Step 7: Check @param tags follow 'type $name Description.' format",
     "Step 8: Check @return tags include type and description (not bare @return)",
     "Step 9: Check @since tags are present on all public and protected members",
-    "Step 10: Check hook documentation is complete with @hook or inline comments",
+    "Step 10: Check hook documentation has PHPDoc blocks before do_action() and apply_filters() calls with @since and @param tags",
     "Step 11: Report findings with specific file locations and suggested fixes"
   ],
   "success_criteria": [
