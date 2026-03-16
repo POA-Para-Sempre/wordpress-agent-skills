@@ -87,7 +87,7 @@ After writing or fixing documentation:
 
 ## Escalation
 
-- When WordPress documentation standards conflict with project-specific conventions (e.g., `AGENTS.WORDPRESS.md` overrides), project conventions win. Note the deviation.
+- When WordPress documentation standards conflict with project-specific conventions (e.g., `AGENTS.md`, `CLAUDE.md` overrides), project conventions win. Note the deviation.
 - When a project uses custom documentation tooling (Docusaurus, MkDocs), adapt the standards to the tooling's constraints but preserve WordPress voice and formatting rules.
 - When unsure whether a PHPDoc issue is a documentation concern (wp-docs) or a type annotation concern (wp-phpstan), apply this rule: wp-docs covers summaries, descriptions, @since, and prose quality; wp-phpstan covers type correctness for static analysis.
 
