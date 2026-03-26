@@ -14,7 +14,7 @@ AI coding assistants are powerful, but they often:
 - Skip proper block deprecations, causing "Invalid block" errors
 - Ignore existing tooling in your repo
 
-Agent Skills solves this by giving AI assistants **expert-level WordPress knowledge** in a format they can actually use.
+Agent Skills solve this by giving AI assistants **expert-level WordPress knowledge** in a format they can actually use.
 
 ## Available Skills
 
