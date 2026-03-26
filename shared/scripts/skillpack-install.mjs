@@ -11,7 +11,7 @@ function usage() {
       "Options:",
       "  --dest=<path>       Destination repo root (required, unless using --global)",
       "  --from=<path>       Source directory (default: dist)",
-      "  --targets=<list>    Comma-separated targets: codex, vscode, claude, claude-global, cursor, cursor-global (default: codex,vscode)",
+      "  --targets=<list>    Comma-separated targets: codex, vscode, claude, claude-global, cursor, cursor-global, antigravity, gemini (default: codex,vscode)",
       "  --skills=<list>     Comma-separated skill names to install (default: all)",
       "  --mode=<mode>       'replace' (default) or 'merge'",
       "  --global            Shorthand for --targets=claude-global (installs to ~/.claude/skills)",
@@ -25,6 +25,8 @@ function usage() {
       "  claude-global       Install to ~/.claude/skills/ (user-level, ignores --dest)",
       "  cursor              Install to <dest>/.cursor/skills/",
       "  cursor-global       Install to ~/.cursor/skills/ (user-level, ignores --dest)",
+      "  antigravity         Install to <dest>/.agent/skills/",
+      "  gemini              Install to <dest>/.gemini/skills/",
       "",
       "Examples:",
       "  # Build and install to a WordPress project",
@@ -133,7 +135,7 @@ function listSkillDirs(skillsRoot) {
     .filter((d) => fs.existsSync(path.join(d, "SKILL.md")));
 }
 
-const VALID_TARGETS = ["codex", "vscode", "claude", "claude-global", "cursor", "cursor-global"];
+const VALID_TARGETS = ["codex", "vscode", "claude", "claude-global", "cursor", "cursor-global", "antigravity", "gemini"];
 
 // Map target to source subdirectory in dist
 function getSourceDir(fromDir, target) {
@@ -145,6 +147,8 @@ function getSourceDir(fromDir, target) {
     vscode: path.join(fromDir, "vscode", ".github", "skills"),
     claude: path.join(fromDir, "claude", ".claude", "skills"),
     cursor: path.join(fromDir, "cursor", ".cursor", "skills"),
+    antigravity: path.join(fromDir, "antigravity", ".agent", "skills"),
+    gemini: path.join(fromDir, "gemini", ".gemini", "skills"),
   };
   return targetDirMap[sourceTarget];
 }
@@ -165,6 +169,8 @@ function getDestDir(destRepoRoot, target) {
     vscode: path.join(destRepoRoot, ".github", "skills"),
     claude: path.join(destRepoRoot, ".claude", "skills"),
     cursor: path.join(destRepoRoot, ".cursor", "skills"),
+    antigravity: path.join(destRepoRoot, ".agent", "skills"),
+    gemini: path.join(destRepoRoot, ".gemini", "skills"),
   };
   return destDirMap[target];
 }
@@ -220,7 +226,7 @@ function installTarget({ fromDir, destRepoRoot, target, skillsFilter, mode, dryR
 
 function listAvailableSkills(fromDir) {
   // Check all possible target sources
-  const sources = ["codex", "vscode", "claude", "cursor"]
+  const sources = ["codex", "vscode", "claude", "cursor", "antigravity", "gemini"]
     .map((t) => getSourceDir(fromDir, t))
     .filter((p) => fs.existsSync(p));
 
