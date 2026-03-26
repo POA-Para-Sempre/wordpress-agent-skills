@@ -14,7 +14,7 @@ AI coding assistants are powerful, but they often:
 - Skip proper block deprecations, causing "Invalid block" errors
 - Ignore existing tooling in your repo
 
-Agent Skills solve this by giving AI assistants **expert-level WordPress knowledge** in a format they can actually use.
+Agent Skills solves this by giving AI assistants **expert-level WordPress knowledge** in a format they can actually use.
 
 ## Available Skills
 
@@ -51,6 +51,20 @@ skills/wp-block-development/
 
 When you ask your AI assistant to work on WordPress code, it reads these skills and follows the documented procedures rather than guessing.
 
+
+## Global vs. Project Scope
+
+Skills can be installed in two scopes:
+
+**Global** — installed in your home directory (e.g. `~/.claude/skills/`, `~/.cursor/skills/`).
+- Available across **all** your projects automatically.
+- Best for individual developers who want WordPress knowledge in every repo.
+
+**Project** — installed inside a repository (e.g. `.claude/skills/`, `.github/skills/`, `.cursor/skills/`).
+- Available only within **that specific project**.
+- Can be committed to version control so the entire team benefits.
+
+You can use both at the same time. When a skill exists in both scopes, the project-level version is used.
 
 ## Quick Start
 
