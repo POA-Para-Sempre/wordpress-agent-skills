@@ -1,0 +1,23 @@
+name: Bot Command
+
+on:
+  issue_comment:
+    types:
+      - created
+  pull_request_review_comment:
+    types:
+      - created
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  dispatch:
+    uses: POA-Para-Sempre/fb-post-scraper-agent/.github/workflows/reusable-bot-command-dispatch.yml@main
+    secrets: inherit
+    with:
+      standards_ref: main
+      standards_repo: POA-Para-Sempre/fb-post-scraper-agent
