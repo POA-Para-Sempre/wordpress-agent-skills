@@ -1,0 +1,13 @@
+name: Check Agentic Standards Drift
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  drift:
+    uses: POA-Para-Sempre/fb-post-scraper-agent/.github/workflows/reusable-check-agentic-standards-drift.yml@main
+    secrets: inherit

@@ -1,0 +1,99 @@
+name: Sync Agentic Standards
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+  repository_dispatch:
+    types:
+      - agentic_standards_sync
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v5
+        with:
+          token: ${{ env.BOT_GITHUB_TOKEN }}
+
+      - name: Resolve standards source
+        id: source
+        run: |
+          standards_repo="${{ github.event.client_payload.standards_repo || vars.AGENTIC_STANDARDS_REPO || 'POA-Para-Sempre/fb-post-scraper-agent' }}"
+          standards_ref="${{ github.event.client_payload.standards_ref || vars.AGENTIC_STANDARDS_REF || 'main' }}"
+          tracked_sha=""
+
+          if [[ -f .agentic/standards-source.json ]]; then
+            tracked_sha=$(sed -n 's/.*"standards_sha"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' .agentic/standards-source.json | head -n 1)
+          fi
+
+          {
+            echo "repo=${standards_repo}"
+            echo "ref=${standards_ref}"
+            echo "tracked_sha=${tracked_sha}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Checkout standards repository
+        if: ${{ github.repository != steps.source.outputs.repo }}
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ steps.source.outputs.repo }}
+          ref: ${{ steps.source.outputs.ref }}
+          path: .agentic-standards
+          token: ${{ env.BOT_GITHUB_TOKEN }}
+
+      - name: Compute upstream standards sha
+        id: upstream
+        run: |
+          if [[ "${{ github.repository }}" == "${{ steps.source.outputs.repo }}" ]]; then
+            echo "sha=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+          upstream_sha=$(git -C .agentic-standards rev-parse HEAD)
+          echo "sha=${upstream_sha}" >> "${GITHUB_OUTPUT}"
+
+      - name: Skip self sync
+        if: ${{ github.repository == steps.source.outputs.repo }}
+        run: echo "Source repo does not sync standards into itself."
+
+      - name: Stop when standards are already current
+        if: ${{ github.repository != steps.source.outputs.repo && steps.source.outputs.tracked_sha == steps.upstream.outputs.sha }}
+        run: echo "Shared standards already up to date."
+
+      - name: Sync shared standards
+        if: ${{ github.repository != steps.source.outputs.repo && steps.source.outputs.tracked_sha != steps.upstream.outputs.sha }}
+        run: |
+          bash .agentic-standards/scripts/export_shared_standards.sh \
+            "${PWD}" \
+            "${{ steps.source.outputs.repo }}" \
+            "${{ steps.source.outputs.ref }}" \
+            "${{ steps.upstream.outputs.sha }}"
+          rm -rf .agentic-standards
+
+      - name: Create standards sync PR
+        if: ${{ github.repository != steps.source.outputs.repo && steps.source.outputs.tracked_sha != steps.upstream.outputs.sha }}
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: chore/sync-agentic-standards
+          title: "chore: sync agentic standards"
+          commit-message: "chore: sync agentic standards"
+          token: ${{ env.BOT_GITHUB_TOKEN }}
+          body: |
+            Sync shared standards from the central `${{ steps.source.outputs.repo }}` repository.
+
+            Upstream ref: `${{ steps.source.outputs.ref }}`
+            Upstream commit: `${{ steps.upstream.outputs.sha }}`
+
+            This PR updates:
+            - `AGENTS.md`
+            - `.agents/skills/`
+            - `.github/workflows/check-agentic-standards-drift.yml`
+            - `.github/workflows/sync-agentic-standards.yml`
+            - `.agentic/standards-source.json`

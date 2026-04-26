@@ -1,0 +1,70 @@
+name: Bot PR Events
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+  pull_request_review:
+    types:
+      - submitted
+  pull_request_review_comment:
+    types:
+      - created
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  pr-metadata-defaults:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    runs-on: ubuntu-latest
+    env:
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
+    steps:
+      - name: Checkout shared standards
+        uses: actions/checkout@v5
+        with:
+          repository: POA-Para-Sempre/fb-post-scraper-agent
+          ref: main
+          path: standards
+          token: ${{ env.BOT_GITHUB_TOKEN }}
+      - name: Apply PR metadata defaults
+        run: |
+          python3 standards/scripts/automation/github_metadata_defaults.py \
+            pr \
+            --repository "${{ github.repository }}" \
+            --issue-number "${{ github.event.pull_request.number }}" \
+            --pr-number "${{ github.event.pull_request.number }}"
+
+  iterate:
+    if: ${{ (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested') || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '/bot iterate')) }}
+    uses: POA-Para-Sempre/fb-post-scraper-agent/.github/workflows/reusable-bot-iterate.yml@main
+    secrets: inherit
+    with:
+      repo_full_name: ${{ github.repository }}
+      issue_number: ${{ github.event.issue.number || github.event.pull_request.number || '' }}
+      pr_number: ${{ github.event.pull_request.number || github.event.issue.number || '' }}
+      branch_name: ${{ github.event.pull_request.head.ref || '' }}
+      request_kind: iterate
+      risk_level: medium
+      review_state: ${{ github.event.review.state || 'unknown' }}
+      ci_state: unknown
+
+  release:
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.repository == 'POA-Para-Sempre/fb-post-scraper-dev' }}
+    uses: POA-Para-Sempre/fb-post-scraper-agent/.github/workflows/reusable-bot-release-promote.yml@main
+    secrets: inherit
+    with:
+      repo_full_name: ${{ github.repository }}
+      dev_repo: ${{ github.repository }}
+      official_repo: POA-Para-Sempre/fb-post-scraper
+      source_tag: ${{ github.event.pull_request.head.ref }}
+      source_commit: ${{ github.event.pull_request.merge_commit_sha || '' }}
+      issue_number: ${{ github.event.pull_request.number || '' }}

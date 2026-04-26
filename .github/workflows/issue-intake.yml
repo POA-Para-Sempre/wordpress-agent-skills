@@ -1,0 +1,17 @@
+name: Issue Intake
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  contents: read
+  issues: write
+  repository-projects: write
+
+jobs:
+  intake:
+    if: ${{ github.actor != vars.BOT_GITHUB_LOGIN && github.actor != 'github-actions[bot]' }}
+    uses: POA-Para-Sempre/fb-post-scraper-agent/.github/workflows/reusable-issue-intake.yml@main
+    secrets: inherit
