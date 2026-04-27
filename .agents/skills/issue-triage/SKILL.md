@@ -28,8 +28,11 @@ Issue maintenance policy:
 Issue-to-branch-and-PR linkage policy:
 - Every non-trivial implementation branch must have a governing issue.
 - Every non-trivial PR must reference that issue in the PR body.
+- Every implementation-ready or active issue must have a linked implementation branch in GitHub's Development area using `Link a branch, pull request, or create a branch` when the platform UI or API supports it; once a PR exists, keep the PR linked there even if GitHub no longer shows a separate standalone branch entry.
+- Every PR that fully resolves its governing issue must include a closing keyword such as `Closes #123` so GitHub populates `closingIssuesReferences` and the PR Development issue link.
+- Every PR that only partially addresses its governing issue must include a non-closing direct issue reference instead of a closing keyword.
 - When the branch name does not encode the issue identifier directly, add an issue comment or other GitHub-visible note that links the issue to the branch and PR.
-- Before merge, verify that the issue, branch, and PR are all cross-referenced strongly enough that the implementation trail is easy to follow.
+- Before merge, verify that the issue, branch, and PR are all cross-referenced strongly enough that the implementation trail is easy to follow, including native Development metadata where supported.
 
 Major work planning policy:
 - Major work must be planned against explicit milestones, not only a branch or issue.
@@ -43,7 +46,7 @@ Pull request policy:
 - Recheck relevant issues and milestones before opening or merging a PR.
 - Ensure non-trivial feature work is linked to an issue before opening the PR.
 - Ensure the issue remains linked from both the PR and the active implementation branch context.
-- Use a closing keyword such as `Closes #123` only when the PR fully resolves the issue.
+- Use a closing keyword such as `Closes #123` only when the PR fully resolves the issue; this is required for fully resolving PRs so GitHub sets `closingIssuesReferences`.
 - If the PR only partially addresses an issue, reference it without closing language.
 - State inferred issue or milestone intent explicitly in the PR body when the exact label or milestone does not exist.
 - Include release-impact context in the PR body when the change affects public behavior or shipping scope.
