@@ -32,6 +32,13 @@ Keep GitHub-centered project work coherent across implementation, documentation,
   - Assignee set to `diemort` and pull-request reviewer set to `dieBot1` unless temporarily overridden.
   - Open issue Development linkage to an implementation branch when work is active or ready for implementation; use the issue sidebar action `Link a branch, pull request, or create a branch` when the platform UI or API supports it, and keep the linked PR visible there once a PR replaces the standalone branch link.
   - Pull request Development linkage to its governing issue; use a closing keyword such as `Closes #NNN` when the PR fully resolves the issue so GitHub populates `closingIssuesReferences`, and use a non-closing direct reference when the PR only partially addresses the issue.
+- Require every issue, including intake, planning, implementation, and follow-up issues, to have native GitHub metadata filled before work concludes:
+  - Type selected in the issue side menu: `Bug`, `Feature`, or `Task`.
+  - Labels selected, with `bug` mapped to `Bug`, `enhancement` mapped to `Feature`, and otherwise `Task`.
+  - Assignee set to `diemort` unless explicitly overridden.
+  - Repo milestone selected when milestones are enabled for the repo.
+  - Org Project selected, at minimum `Org Issue Triage And Dev Automation`.
+  - Development linkage selected in the issue side menu when the issue is active or ready for implementation, using `Link a branch, pull request, or create a branch`.
 - Require non-trivial work to start on a branch, not on `main`.
 - Require a pull request before merge for non-trivial work; do not push implementation commits directly to `main`.
 - Recheck the relevant issue list before implementation, before opening a PR, and before merging.

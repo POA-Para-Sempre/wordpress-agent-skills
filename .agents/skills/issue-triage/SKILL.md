@@ -23,6 +23,11 @@ Feature issue policy:
 Issue maintenance policy:
 - Keep the active tracking issue updated with enough context that another operator can understand the current scope without reconstructing it from chat history alone.
 - Refresh the issue body or add a summary comment when scope, constraints, implementation strategy, or deferred follow-ups materially change.
+- Before concluding issue work, verify the issue has native GitHub metadata filled: Type, labels, assignee, milestone when enabled, org Project, and Development linkage when active or ready for implementation.
+- Map native Issue Type from labels unless the user explicitly chooses a different type: `bug` -> `Bug`, `enhancement` -> `Feature`, otherwise `Task`.
+- Add the issue to `Org Issue Triage And Dev Automation` unless a repo-specific Project override is documented.
+- Assign the issue to `diemort` unless the user explicitly names a different owner.
+- Link the issue to a branch through the issue Development area before implementation starts when the platform supports it.
 - Before merge, verify that the issue still describes what shipped, what was deferred, and any notable operational context.
 
 Issue-to-branch-and-PR linkage policy:
