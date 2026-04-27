@@ -30,7 +30,8 @@ Keep GitHub-centered project work coherent across implementation, documentation,
   - Org project assignment (at minimum `Org Issue Triage And Dev Automation`).
   - Explicit development linkage to the implementation branch or PR.
   - Assignee set to `diemort` and pull-request reviewer set to `dieBot1` unless temporarily overridden.
-  - Open issue Development linkage to an implementation branch when work is active or ready for implementation.
+  - Open issue Development linkage to an implementation branch when work is active or ready for implementation; use the issue sidebar action `Link a branch, pull request, or create a branch` when the platform UI or API supports it, and keep the linked PR visible there once a PR replaces the standalone branch link.
+  - Pull request Development linkage to its governing issue; use a closing keyword such as `Closes #NNN` when the PR fully resolves the issue so GitHub populates `closingIssuesReferences`, and use a non-closing direct reference when the PR only partially addresses the issue.
 - Require non-trivial work to start on a branch, not on `main`.
 - Require a pull request before merge for non-trivial work; do not push implementation commits directly to `main`.
 - Recheck the relevant issue list before implementation, before opening a PR, and before merging.
