@@ -50,6 +50,7 @@ Keep GitHub-centered project work coherent across implementation, documentation,
 - Ensure non-trivial work is explicitly linked across issue, branch, and PR, including the GitHub Development section when the platform supports the linkage.
 - Treat the platform Codex PR review integration as the default review lane unless a repo explicitly opts into a different review setup.
 - For non-trivial PRs, explicitly request Codex review with `@codex review` instead of relying on passive auto-trigger behavior.
+- After requesting Codex review, keep monitoring the PR for Codex comments before merging; answer or resolve every Codex comment first, then merge only after Codex gives an explicit OK or approval.
 - Keep repo-managed agent automation focused on write-capable implementation flows, not duplicative reviewer workflows.
 - When the shared GitHub bot workflow is enabled, route issue edits, comments, branch pushes, pull request creation, merges, and release-related writes through the configured machine-user bot identity instead of `github-actions[bot]`.
 
